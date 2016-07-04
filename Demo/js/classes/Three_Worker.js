@@ -44,42 +44,42 @@ Worker.prototype.createCoin = function() {
 
     // Cration d'une instance de la pièce
     var coin = new THREE.Mesh(
-        this._scene.getObjectByName("Coin").geometry,
-        this._scene.getObjectByName("Coin").material
+        this._scene.getObjectByName("Coin").children[0].geometry,
+        this._scene.getObjectByName("Coin").children[0].material
     );
 
     // On la rend visible et on la positionne au bon endroit
     coin.visible = true;
+    coin.scale.set(0.035,0.035,0.035);
+    coin.rotateX(Math.PI/2);
     coin.position.set(
         this.mesh.position.x,
-        this.mesh.position.y + 6,
+        this.mesh.position.y + 3,
         this.mesh.position.z
     );
     coin.position.x += Math.random() * 2 - 1;
     coin.position.z += Math.random() * 4 - 2;
     this._scene.add(coin);
 
-    //// On l'anime vers le haut en rotation sur elle-même
-    //BABYLON.Animation.CreateAndStartAnimation(
-    //    "elevation",
-    //    coin,
-    //    "position.y",
-    //    60,
-    //    90,
-    //    coin.position.y,
-    //    10,
-    //    BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT
-    //);
-    //BABYLON.Animation.CreateAndStartAnimation(
-    //    "rotation",
-    //    coin,
-    //    "rotation.y",
-    //    60,
-    //    90,
-    //    coin.rotation.y,
-    //    coin.rotation.y + Math.PI *2,
-    //    BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT
-    //);
+    // On l'anime vers le haut en rotation sur elle-même
+    new TWEEN.Tween( coin.position )
+        .to(
+        {
+            y:  coin.position.y + 6
+        },
+        1250
+    )
+        .easing( TWEEN.Easing.Linear.None)
+        .start();
+    new TWEEN.Tween( coin.rotation )
+        .to(
+            {
+                z:  coin.rotation.z + Math.PI*2
+            },
+            1250
+        )
+        .easing( TWEEN.Easing.Linear.None)
+        .start();
 
     var _this = this;
     // Au bout de quelques ms on la supprime

@@ -2,6 +2,7 @@
 window.addEventListener('DOMContentLoaded', function() {
 
     // On démarre le moteur 3D  (en lui donnant un paramètre antialising)
+    //http://i30.photobucket.com/albums/c313/bpd86cm1/Anti-Aliasing.jpg
     var renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setClearColor(0x9696ff);   // Couleur de fond
 
@@ -14,8 +15,8 @@ window.addEventListener('DOMContentLoaded', function() {
     document.body.appendChild(renderer.domElement);
 
 
-    // On démarre un objet qui va nous servir à charger des éléments
-    var loadingManager = new THREE.LoadingManager();
+    /************ STUDIO DE CINÉMA ************/
+
 
     // Puis, on créé une scène
     var scene = new THREE.Scene;
@@ -25,7 +26,7 @@ window.addEventListener('DOMContentLoaded', function() {
         45,             // FOV
         width / height, // Ratio
         0.1,            // Near
-        100000          // Far
+        10000           // Far
     );
     camera.position.y = 23;
     camera.position.x = -31;
@@ -54,16 +55,11 @@ window.addEventListener('DOMContentLoaded', function() {
     var groundGeometry = new THREE.PlaneBufferGeometry(500, 500, 10, 10);
 
     // Personnalisé, pour plus de réalisme - (matériaux, éclairage, textures)
-    //var imageLoader = new THREE.ImageLoader( loadingManager );
-    //imageLoader.load( "assets/ground.png", function ( image ) {
-    //
-    //    texture.image = image;
-    //    texture.needsUpdate = true;
-    //
-    //} );
+
     var groundTexture = new THREE.ImageUtils.loadTexture("assets/ground.png");
     groundTexture.wrapS = groundTexture.wrapT = THREE.RepeatWrapping;
     groundTexture.repeat.set(10,10);
+
     var groundMaterial = new THREE.MeshLambertMaterial({map: groundTexture});
 
     var ground = new THREE.Mesh(
@@ -134,6 +130,9 @@ window.addEventListener('DOMContentLoaded', function() {
     }
 
 
+    // On démarre un objet qui va nous servir à charger des éléments
+    var loadingManager = new THREE.LoadingManager();
+
     var objLoader = new THREE.OBJLoader( loadingManager );
     objLoader.load( "assets/Coin.obj", function ( object ) {
         object.name = "Coin";
@@ -160,6 +159,7 @@ window.addEventListener('DOMContentLoaded', function() {
             peon.update(deltaTime);
         });
 
+        TWEEN.update();
         renderer.render(scene, camera);
     };
     render();
