@@ -41,7 +41,8 @@ Worker.prototype.setWorkplace = function(workplace) {
 Worker.prototype.createCoin = function() {
 
     // Cration d'une instance de la pièce
-    var coin = this._scene.getMeshByName("Coin").createInstance("Coin_Anim");
+    var coin = this._scene.getMeshByName("Coin")
+        .createInstance("Coin_Anim");
 
     // On la rend visible et on la positionne au bon endroit
     coin.isVisible = true;
@@ -51,14 +52,14 @@ Worker.prototype.createCoin = function() {
 
     // On l'anime vers le haut en rotation sur elle-même
     BABYLON.Animation.CreateAndStartAnimation(
-        "elevation",
-        coin,
-        "position.y",
-        60,
-        90,
-        coin.position.y,
-        10,
-        BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT
+        "elevation",        // Nom
+        coin,               // Objet
+        "position.y",       // Attribut
+        60,                 // Nombre de changement par seconde
+        90,                 // Nombre total de changement
+        coin.position.y,    // Valeur de départ
+        10,                 // Valeur finale
+        BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT    // Loop mode
     );
     BABYLON.Animation.CreateAndStartAnimation(
         "rotation",

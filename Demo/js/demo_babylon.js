@@ -4,7 +4,8 @@ window.addEventListener('DOMContentLoaded', function() {
     // On récupère notre canvas, appelé "affichage"
     var canvas = document.getElementById('affichage');
 
-    // On démarre le moteur 3D, en lui donnant le canvas comme paramètre (et l'antialising)
+    // On démarre le moteur 3D, en lui donnant le canvas
+    // comme paramètre (et l'antialising)
     //http://i30.photobucket.com/albums/c313/bpd86cm1/Anti-Aliasing.jpg
     var engine = new BABYLON.Engine(canvas, true);
     engine.loadingUIBackgroundColor = "Black";
@@ -15,16 +16,18 @@ window.addEventListener('DOMContentLoaded', function() {
     var scene = new BABYLON.Scene(engine);
     scene.clearColor = new BABYLON.Color3.FromInts(150,150,255);    // Couleur de fond
 
-    // Une fois la scène créé, nous devons créer une caméra, afin de pouvoir retransmettre ce qu'elle voit dans le canvas.
+    // Une fois la scène créé, nous devons créer une caméra,
+    // afin de pouvoir retransmettre ce qu'elle voit
+    // dans le canvas.
     // Il existe différent types de caméras
 
     // Free
-    /*var camera = new BABYLON.FreeCamera(
-     "camera_free",
-     new BABYLON.Vector3(10, 50, -60),
-     scene
-     );
-     camera.setTarget(BABYLON.Vector3.Zero());*/
+    //var camera = new BABYLON.FreeCamera(
+    //    "camera_free",
+    //    new BABYLON.Vector3(10, 50, -60),
+    //    scene
+    //);
+    //camera.setTarget(BABYLON.Vector3.Zero());
 
     // ArcRotate
     var camera = new BABYLON.ArcRotateCamera(
@@ -34,11 +37,12 @@ window.addEventListener('DOMContentLoaded', function() {
         scene
     );
 
-    // Prenons ensuite le contrôle de la caméra! Sans pouvoir en faire n'importe quoi ...
+    // Prenons ensuite le contrôle de la caméra!
+    // Sans pouvoir en faire n'importe quoi ...
     camera.attachControl(canvas, true);
     camera.upperBetaLimit = Math.PI/2 - 0.1;
 
-    //// Un petit truc à voir pour le début
+    // Un petit truc à voir pour le début
     //var cube = new BABYLON.Mesh.CreateBox(
     //    "monCube",  // Nom
     //    5,          // Taille
@@ -71,15 +75,18 @@ window.addEventListener('DOMContentLoaded', function() {
         scene   // Scene
     );
 
-    // Personnalisé, pour plus de réalisme - (matériaux, éclairage, textures)
-    var groundMaterial = new BABYLON.StandardMaterial("groundMaterial", scene);
+    // Personnalisé, pour plus de réalisme -
+    // (matériaux, éclairage, textures)
+    var groundMaterial =
+        new BABYLON.StandardMaterial("groundMaterial", scene);
 
-    groundMaterial.diffuseTexture = new BABYLON.Texture('assets/ground.png', scene);
+    groundMaterial.diffuseTexture =
+        new BABYLON.Texture('assets/ground.png', scene);
     groundMaterial.diffuseTexture.uScale = 10;
     groundMaterial.diffuseTexture.vScale = 10;
 
     // Pour paraitre plus vert
-    //groundMaterial.diffuseColor = new BABYLON.Color3.FromInts(100,200,100);
+    groundMaterial.diffuseColor = new BABYLON.Color3.FromInts(100,200,100);
     // Pour ne pas réfléchir la source de lumière
     groundMaterial.specularColor = BABYLON.Color3.Black();
 
@@ -161,8 +168,10 @@ window.addEventListener('DOMContentLoaded', function() {
         });
     };
 
-    var coinLoadingTask = assetsManager.addMeshTask("Coin", "", "./", "assets/Coin.babylon");
-    //var coinLoadingTask = assetsManager.addMeshTask("Coin", "", "./", "assets/Coin.obj");
+    var coinLoadingTask = assetsManager.addMeshTask(
+        "Coin", "", "./", "assets/Coin.babylon");
+    //var coinLoadingTask = assetsManager.addMeshTask
+    //    ("Coin", "", "./", "assets/Coin.obj");
 
     coinLoadingTask.onSuccess = function (task) {
         task.loadedMeshes[0].name = "Coin";
